@@ -523,7 +523,7 @@ describe('Queries', function () {
   });
 
   it('should preserve query in paging links', function(done) {
-    var conditions = JSON.stringify({ color: { $regex: /.*e.*/ } });
+    var conditions = JSON.stringify({ color: { $regex: '.*e.*' } });
     var options = {
       url: 'http://localhost:8012/api/minerals?limit=1&skip=0&conditions=' + conditions,
       json: true

@@ -6,7 +6,7 @@
     "url": "http://kun.io/wprl"
   },
   "homepage": "https://github.com/wprl/baucis",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha --bail",
@@ -49,7 +49,7 @@
     "semver": "^4.3.4"
   },
   "peerDependencies": {
-    "mongoose": "3 - 4.0.4",
+    "mongoose": ">=3 <5",
     "express": "^4.12.0"
   },
   "devDependencies": {
