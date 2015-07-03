@@ -112,7 +112,8 @@ var decorator = module.exports = function (options, protect) {
 
     request.baucis.query.count(function (error, n) {
       if (error) return next(error);
-      response.json(n);
+      response.json(n); // TODO support other content types
+      next();
     });
   });
 
@@ -194,6 +195,14 @@ var decorator = module.exports = function (options, protect) {
     });
   });
 
+  // OPTIONS // TODO Express' extra handling for OPTIONS conflicts with baucis
+  // TODO maybe send method names in body
+  // controller.options(function (request, response, next) {
+  //   console.log('here')
+  //   request.baucis.send(empty);
+  //   next();
+  // });
+
   // HEAD
   protect.finalize('instance', 'head', function (request, response, next) {
     if (lastModifiedPath) {
@@ -274,7 +283,6 @@ var decorator = module.exports = function (options, protect) {
   });
 
   protect.finalize(function (request, response, next) {
-
     request.baucis.send().pipe(es.through(function (chunk) {
       response.write(chunk);
     }, function () {

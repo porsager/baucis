@@ -11,10 +11,11 @@ var Api = module.exports = deco(function (options, protect) {
 
   api.use(function (request, response, next) {
     if (request.baucis) return next(RestError.Misconfigured('Baucis request property already created'));
+
     request.baucis = {};
     response.removeHeader('x-powered-by');
     // Any caching proxies should be aware of API version.
-    response.set('Vary', 'API-Version');
+    response.vary('API-Version');
     // TODO move this
     // Requested range is used to select highest possible release number.
     // Then later controllers are checked for matching the release number.
