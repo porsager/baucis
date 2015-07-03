@@ -14,6 +14,7 @@ var decorator = module.exports = function (model, protect) {
 
   // __Property Definitions__
   protect.property('comments', false);
+  protect.property('explain', false);
   protect.property('hints', false);
   protect.property('select', '');
   protect.property('sort', '');

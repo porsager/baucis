@@ -16,6 +16,11 @@ var decorator = module.exports = function () {
         return;
       }
     }
+
+    if (conditions.$explain && !controller.explain()) {
+      return next(RestError.BadRequest('Using $explain is disabled for this resource'));
+    }
+
     if (request.params.id !== undefined) {
       conditions[controller.findBy()] = request.params.id;
     }

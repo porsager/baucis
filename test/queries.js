@@ -833,4 +833,17 @@ describe('Queries', function () {
     });
   });
 
+  it('disallows $explain by default', function (done) {
+    var options = {
+      url: 'http://localhost:8012/api/vegetables?conditions={ "$explain": true }',
+      json: true
+    };
+    request.get(options, function (error, response, body) {
+      if (error) return done(error);
+      expect(response.statusCode).to.be(400);
+      expect(body).to.have.property('message', 'Using $explain is disabled for this resource (400).');
+      done();
+    });
+  });
+
 });

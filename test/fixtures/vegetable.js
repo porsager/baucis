@@ -64,7 +64,7 @@ var fixture = module.exports = {
 
     baucis.rest('fungus').select('-hyphenated-field-name');
 
-    baucis.rest('mineral').relations(true).sort('color');
+    baucis.rest('mineral').relations(true).sort('color').explain(true);
 
     baucis.rest('animal').fragment('empty-array').emptyCollection(200);
     baucis.rest('animal').fragment('no-content').emptyCollection(204);
