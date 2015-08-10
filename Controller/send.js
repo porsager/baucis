@@ -112,8 +112,7 @@ var decorator = module.exports = function (options, protect) {
 
     request.baucis.query.count(function (error, n) {
       if (error) return next(error);
-      response.json(n); // TODO support other content types
-      next();
+      return response.json(n); // TODO support other content types
     });
   });
 
