@@ -65,7 +65,7 @@ var decorator = module.exports = function (options, protect) {
     // Save each document.
     pipeline(function (context, callback) {
       context.doc.save(function (error, doc) {
-        if (error) return callback(error);
+        if (error) return next(error);
         callback(null, { incoming: context.incoming, doc: doc });
       });
     });
