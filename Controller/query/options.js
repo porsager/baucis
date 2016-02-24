@@ -15,6 +15,10 @@ function isPositiveInteger (n) {
   return n === Math.ceil(n);
 }
 
+function getAsInt(n) {
+	return Math.ceil(Number(n));
+}
+
 function isNonNegativeInteger (n) {
   if (!isDefinedAndNotNull(n)) return false;
   n = Number(n);
@@ -121,7 +125,7 @@ var decorator = module.exports = function () {
     if (!isNonNegativeInteger(skip)) {
       return next(RestError.BadRequest('Skip must be a non-negative integer if set'));
     }
-    request.baucis.query.skip(skip);
+    request.baucis.query.skip(getAsInt(skip));
     next();
   });
   // Apply incoming request limit.
@@ -131,7 +135,7 @@ var decorator = module.exports = function () {
     if (!isPositiveInteger(limit)) {
       return next(RestError.BadRequest('Limit must be a positive integer if set'));
     }
-    request.baucis.query.limit(limit);
+    request.baucis.query.limit(getAsInt(limit));
     next();
   });
   // Set count flag.
