@@ -60,7 +60,7 @@ var decorator = module.exports = function (options, protect) {
         var query = controller.model().findOne(request.baucis.conditions);
         query.exec(function (error, doc) {
           if (error) return callback(error);
-          if (!doc) return callback(RestError.NotFound());
+          
           // Add the Mongoose document to the context.
           callback(null, { doc: doc, incoming: context.incoming });
         });
@@ -147,7 +147,13 @@ var decorator = module.exports = function (options, protect) {
     if (!operator) {
       // Update the Mongoose document with the request body.
       pipeline(function (context, callback) {
-        context.doc.set(context.incoming);
+        if(context.doc) {
+          context.doc.set(context.incoming);
+        } else {
+          response.status(201)
+          context.incoming[controller.findBy()] = request.params.id
+          context.doc = new (controller.model())(context.incoming)
+        }
         // Pass through.
         callback(null, context);
       });
