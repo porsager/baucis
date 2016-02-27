@@ -50,9 +50,10 @@ describe('GET plural', function () {
       json: true
     };
     request.get(options, function (err, response, body) {
+      console.dir(error);
       if (err) return done(err);
-      // expect(response.statusCode).to.be(200);
-      // expect(body).to.eql([]);
+      expect(response.statusCode).to.be(200);
+      expect(body).to.eql([]);
       done();
     });
   });
