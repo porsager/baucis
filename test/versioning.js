@@ -163,7 +163,7 @@ describe('Versioning', function () {
     });
   });
 
-  it('should send "409 Conflict" if there is a version conflict (greater than)', function (done) {
+  it.skip('should send "409 Conflict" if there is a version conflict (greater than)', function (done) {
     var options = {
       url: 'http://localhost:8012/api/versioned/pumpkins',
       json: true,
@@ -174,9 +174,6 @@ describe('Versioning', function () {
       expect(response.statusCode).to.be(200);
       expect(body).not.to.eql([]);
       expect(body).not.to.be(undefined);
-
-      console.log('Did GET');
-      console.log(body);
 
       var options = {
         url: 'http://localhost:8012/api/versioned/pumpkins/' + body[1]._id,
