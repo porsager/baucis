@@ -112,6 +112,7 @@ var decorator = module.exports = function (options, protect) {
 
     request.baucis.query.count(function (error, n) {
       if (error) return next(error);
+      response.removeHeader('Transfer-Encoding');
       return response.json(n); // TODO support other content types
     });
   });
@@ -143,6 +144,8 @@ var decorator = module.exports = function (options, protect) {
 
         if (status === 204) return this.emit('end');
         if (status === 200) {
+          response.removeHeader('Transfer-Encoding');
+          // TODO this is setting Content-Length, causing an error on Codeship
           response.json([]); // TODO other content types
           this.emit('end');
           return;
