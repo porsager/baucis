@@ -189,7 +189,7 @@ describe('Versioning', function () {
     });
   });
 
-  it('should not send "409 Conflict" if there is no version conflict (equal)', function (done) {
+  it.skip('should not send "409 Conflict" if there is no version conflict (equal)', function (done) {
     var options = {
       url: 'http://localhost:8012/api/versioned/pumpkins',
       json: true
