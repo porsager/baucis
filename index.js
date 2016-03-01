@@ -1,5 +1,6 @@
 // __Dependencies__
 var deco = require('deco');
+var es = require('event-stream');
 var mongoose = require('mongoose');
 var Api = require('./Api');
 var Controller = require('./Controller');
@@ -33,6 +34,12 @@ baucis.empty = function () {
 };
 
 baucis.formatters = function (response, callback) {
+  if (response._headerSent) {
+    callback(null, function () {
+      return es.through();
+    });
+    return;
+  }
 
   var handlers = {
     default: function () {
