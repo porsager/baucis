@@ -190,6 +190,9 @@ var decorator = module.exports = function (options, protect) {
     ));
     // Apply user streams.
     pipeline(request.baucis.outgoing());
+
+    if (response._headerSent) return next();
+
     // Set the document formatter based on the Accept header of the request.
     baucis.formatters(response, function (error, formatter) {
       if (error) return next(error);

@@ -41,7 +41,6 @@ baucis.formatters = function (response, callback) {
   };
 
   Object.keys(formatters).map(function (mime) {
-    if (response._headerSent) return handlers[mime] = formatters.nop(callback);
     handlers[mime] = formatters[mime](callback);
   });
   response.format(handlers);
