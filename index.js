@@ -33,14 +33,17 @@ baucis.empty = function () {
 };
 
 baucis.formatters = function (response, callback) {
-  if (response._headerSent) return callback();
 
   var handlers = {
     default: function () {
       callback(RestError.NotAcceptable());
+    },
+    nop: function () {
+      callback();
     }
   };
   Object.keys(formatters).map(function (mime) {
+    if (response._headerSent) return handlers[mime] = formatters.nop(callback);
     handlers[mime] = formatters[mime](callback);
   });
   response.format(handlers);
