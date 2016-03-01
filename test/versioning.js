@@ -175,6 +175,9 @@ describe('Versioning', function () {
       expect(body).not.to.eql([]);
       expect(body).not.to.be(undefined);
 
+      console.log('Did GET');
+      console.log(body);
+
       var options = {
         url: 'http://localhost:8012/api/versioned/pumpkins/' + body[1]._id,
         json: true,
