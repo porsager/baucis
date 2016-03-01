@@ -33,6 +33,8 @@ baucis.empty = function () {
 };
 
 baucis.formatters = function (response, callback) {
+  if (response._headerSent) return callback();
+
   var handlers = {
     default: function () {
       callback(RestError.NotAcceptable());

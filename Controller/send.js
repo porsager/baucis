@@ -145,7 +145,6 @@ var decorator = module.exports = function (options, protect) {
         if (status === 204) return this.emit('end');
         if (status === 200) {
           response.removeHeader('Transfer-Encoding');
-          // TODO this is setting Content-Length, causing an error on Codeship
           response.json([]); // TODO other content types
           this.emit('end');
           return;
@@ -270,6 +269,7 @@ var decorator = module.exports = function (options, protect) {
   // PUT
   protect.finalize('put', function (request, response, next) {
     request.baucis.send(redoc);
+    // TODO formatter is setting headers even though a 409 doesn't have a body
     request.baucis.send(request.baucis.formatter());
     next();
   });
