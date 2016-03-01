@@ -155,6 +155,8 @@ var decorator = module.exports = function (options, protect) {
     ));
     // Apply user streams.
     pipeline(request.baucis.outgoing());
+
+    if (response._headerSent) return next();
     // Set the document formatter based on the Accept header of the request.
     baucis.formatters(response, function (error, formatter) {
       if (error) return next(error);
@@ -269,7 +271,6 @@ var decorator = module.exports = function (options, protect) {
   // PUT
   protect.finalize('put', function (request, response, next) {
     request.baucis.send(redoc);
-    // TODO formatter is setting headers even though a 409 doesn't have a body
     request.baucis.send(request.baucis.formatter());
     next();
   });
