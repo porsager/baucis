@@ -165,29 +165,22 @@ describe('Versioning', function () {
 
   it('should send "409 Conflict" if there is a version conflict (greater than)', function (done) {
     var options = {
-      url: 'http://localhost:8012/api/versioned/pumpkins',
-      json: true,
-      body: { name: 'Red' }
+      url: 'http://localhost:8012/api/versioned/pumpkins?sort=-_id',
+      json: true
     };
     request.get(options, function (error, response, body) {
-      console.log('DEBUG1')
-      console.log(error);
-      console.log(body);
       if (error) return done(error);
       expect(response.statusCode).to.be(200);
       expect(body).not.to.be(undefined);
       expect(body).to.be.an(Array);
-      expect(body.length).to.be.above(2);
+      expect(body.length).to.be.above(0);
 
       var options = {
-        url: 'http://localhost:8012/api/versioned/pumpkins/' + body[1]._id,
+        url: 'http://localhost:8012/api/versioned/pumpkins/' + body[0]._id,
         json: true,
-        body: { __v: body[1].__v + 10 }
+        body: { __v: body[0].__v + 10 }
       };
       request.put(options, function (error, response, body) {
-        console.log('DEBUG2')
-        console.log(error);
-        console.log(body);
         if (error) return done(error);
         expect(response.statusCode).to.be(409);
         expect(body).to.have.property('message', 'The requested update would conflict with a previous update (409).');
@@ -198,23 +191,19 @@ describe('Versioning', function () {
 
   it('should not send "409 Conflict" if there is no version conflict (equal)', function (done) {
     var options = {
-      url: 'http://localhost:8012/api/versioned/pumpkins',
+      url: 'http://localhost:8012/api/versioned/pumpkins?sort=-_id',
       json: true
     };
     request.get(options, function (error, response, body) {
-      console.log(error);
-      console.log(body);
       if (error) return done(error);
       expect(response.statusCode).to.be(200);
 
       var options = {
-        url: 'http://localhost:8012/api/versioned/pumpkins/' + body[1]._id,
+        url: 'http://localhost:8012/api/versioned/pumpkins/' + body[0]._id,
         json: true,
-        body: { __v: body[1].__v }
+        body: { __v: body[0].__v }
       };
       request.put(options, function (error, response, body) {
-        console.log(error);
-        console.log(body);
         if (error) return done(error);
         expect(response.statusCode).to.be(200);
         done();
