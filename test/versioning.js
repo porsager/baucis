@@ -170,12 +170,14 @@ describe('Versioning', function () {
       body: { name: 'Red' }
     };
     request.get(options, function (error, response, body) {
+      console.log('DEBUG1')
       console.log(error);
       console.log(body);
       if (error) return done(error);
       expect(response.statusCode).to.be(200);
-      expect(body).not.to.eql([]);
       expect(body).not.to.be(undefined);
+      expect(body).to.be.an(Array);
+      expect(body.length).to.be.above(2);
 
       var options = {
         url: 'http://localhost:8012/api/versioned/pumpkins/' + body[1]._id,
@@ -183,6 +185,7 @@ describe('Versioning', function () {
         body: { __v: body[1].__v + 10 }
       };
       request.put(options, function (error, response, body) {
+        console.log('DEBUG2')
         console.log(error);
         console.log(body);
         if (error) return done(error);
