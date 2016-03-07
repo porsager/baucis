@@ -163,8 +163,7 @@ describe('Versioning', function () {
     });
   });
 
-  // TODO this test fails on Codeship
-  it.skip('should send "409 Conflict" if there is a version conflict (greater than)', function (done) {
+  it('should send "409 Conflict" if there is a version conflict (greater than)', function (done) {
     var options = {
       url: 'http://localhost:8012/api/versioned/pumpkins',
       json: true,
@@ -182,6 +181,8 @@ describe('Versioning', function () {
         body: { __v: body[1].__v + 10 }
       };
       request.put(options, function (error, response, body) {
+        console.log(error);
+        console.log(body);
         if (error) return done(error);
         expect(response.statusCode).to.be(409);
         expect(body).to.have.property('message', 'The requested update would conflict with a previous update (409).');
@@ -190,13 +191,14 @@ describe('Versioning', function () {
     });
   });
 
-  // TODO this test fails on Codeship
-  it.skip('should not send "409 Conflict" if there is no version conflict (equal)', function (done) {
+  it('should not send "409 Conflict" if there is no version conflict (equal)', function (done) {
     var options = {
       url: 'http://localhost:8012/api/versioned/pumpkins',
       json: true
     };
     request.get(options, function (error, response, body) {
+      console.log(error);
+      console.log(body);
       if (error) return done(error);
       expect(response.statusCode).to.be(200);
 
@@ -206,6 +208,8 @@ describe('Versioning', function () {
         body: { __v: body[1].__v }
       };
       request.put(options, function (error, response, body) {
+        console.log(error);
+        console.log(body);
         if (error) return done(error);
         expect(response.statusCode).to.be(200);
         done();
