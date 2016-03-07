@@ -163,6 +163,7 @@ describe('Versioning', function () {
     });
   });
 
+  // TODO this test fails on Codeship
   it.skip('should send "409 Conflict" if there is a version conflict (greater than)', function (done) {
     var options = {
       url: 'http://localhost:8012/api/versioned/pumpkins',
@@ -189,6 +190,7 @@ describe('Versioning', function () {
     });
   });
 
+  // TODO this test fails on Codeship
   it.skip('should not send "409 Conflict" if there is no version conflict (equal)', function (done) {
     var options = {
       url: 'http://localhost:8012/api/versioned/pumpkins',
