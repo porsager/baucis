@@ -170,6 +170,8 @@ describe('Versioning', function () {
       body: { name: 'Red' }
     };
     request.get(options, function (error, response, body) {
+      console.log(error);
+      console.log(body);
       if (error) return done(error);
       expect(response.statusCode).to.be(200);
       expect(body).not.to.eql([]);
