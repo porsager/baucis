@@ -1,6 +1,6 @@
 # baucis
 
-![Codeship](https://codeship.com/projects/43c2fac0-bfa5-0133-3ab4-4e7013906a8c/status?branch=development)
+![Codeship](https://codeship.com/projects/43c2fac0-bfa5-0133-3ab4-4e7013906a8c/status?branch=master)
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/wprl/baucis?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
