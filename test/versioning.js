@@ -165,20 +165,20 @@ describe('Versioning', function () {
 
   it('should send "409 Conflict" if there is a version conflict (greater than)', function (done) {
     var options = {
-      url: 'http://localhost:8012/api/versioned/pumpkins',
-      json: true,
-      body: { name: 'Red' }
+      url: 'http://localhost:8012/api/versioned/pumpkins?sort=-_id',
+      json: true
     };
     request.get(options, function (error, response, body) {
       if (error) return done(error);
       expect(response.statusCode).to.be(200);
-      expect(body).not.to.eql([]);
       expect(body).not.to.be(undefined);
+      expect(body).to.be.an(Array);
+      expect(body.length).to.be.above(0);
 
       var options = {
-        url: 'http://localhost:8012/api/versioned/pumpkins/' + body[1]._id,
+        url: 'http://localhost:8012/api/versioned/pumpkins/' + body[0]._id,
         json: true,
-        body: { __v: body[1].__v + 10 }
+        body: { __v: body[0].__v + 10 }
       };
       request.put(options, function (error, response, body) {
         if (error) return done(error);
@@ -191,7 +191,7 @@ describe('Versioning', function () {
 
   it('should not send "409 Conflict" if there is no version conflict (equal)', function (done) {
     var options = {
-      url: 'http://localhost:8012/api/versioned/pumpkins',
+      url: 'http://localhost:8012/api/versioned/pumpkins?sort=-_id',
       json: true
     };
     request.get(options, function (error, response, body) {
@@ -199,9 +199,9 @@ describe('Versioning', function () {
       expect(response.statusCode).to.be(200);
 
       var options = {
-        url: 'http://localhost:8012/api/versioned/pumpkins/' + body[1]._id,
+        url: 'http://localhost:8012/api/versioned/pumpkins/' + body[0]._id,
         json: true,
-        body: { __v: body[1].__v }
+        body: { __v: body[0].__v }
       };
       request.put(options, function (error, response, body) {
         if (error) return done(error);

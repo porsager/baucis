@@ -112,6 +112,7 @@ var decorator = module.exports = function (options, protect) {
 
     request.baucis.query.count(function (error, n) {
       if (error) return next(error);
+      response.removeHeader('Transfer-Encoding');
       return response.json(n); // TODO support other content types
     });
   });
@@ -143,6 +144,7 @@ var decorator = module.exports = function (options, protect) {
 
         if (status === 204) return this.emit('end');
         if (status === 200) {
+          response.removeHeader('Transfer-Encoding');
           response.json([]); // TODO other content types
           this.emit('end');
           return;
@@ -153,6 +155,7 @@ var decorator = module.exports = function (options, protect) {
     ));
     // Apply user streams.
     pipeline(request.baucis.outgoing());
+
     // Set the document formatter based on the Accept header of the request.
     baucis.formatters(response, function (error, formatter) {
       if (error) return next(error);
@@ -186,6 +189,7 @@ var decorator = module.exports = function (options, protect) {
     ));
     // Apply user streams.
     pipeline(request.baucis.outgoing());
+
     // Set the document formatter based on the Accept header of the request.
     baucis.formatters(response, function (error, formatter) {
       if (error) return next(error);
