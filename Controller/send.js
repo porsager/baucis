@@ -125,7 +125,7 @@ var decorator = module.exports = function (options, protect) {
     // If documents were set in the baucis hash, use them.
     if (documents) pipeline(es.readArray([].concat(documents)));
     // Otherwise, stream the relevant documents from Mongo, based on constructed query.
-    else pipeline(request.baucis.query.stream());
+    else pipeline(request.baucis.query.cursor());
     // Map documents to contexts.
     pipeline(function (doc, callback) {
       callback(null, { doc: doc, incoming: null });
@@ -171,7 +171,7 @@ var decorator = module.exports = function (options, protect) {
     // If documents were set in the baucis hash, use them.
     if (documents) pipeline(es.readArray([].concat(documents)));
     // Otherwise, stream the relevant documents from Mongo, based on constructed query.
-    else pipeline(request.baucis.query.stream());
+    else pipeline(request.baucis.query.cursor());
     // Map documents to contexts.
     pipeline(function (doc, callback) {
       callback(null, { doc: doc, incoming: null });
